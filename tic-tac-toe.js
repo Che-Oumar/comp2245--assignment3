@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
    let turn = "X";
    const state = Array(9).fill(null);
    const resetButton = document.querySelector(".btn");
+   const status = document.getElementById("status");
    const winningCombinations = [
        [0,1,2], [3,4,5], [6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]
    ];
@@ -17,12 +18,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
    squares.forEach(function(square, index) {
        square.classList.add("square");
-       square.addEventListener("mouseover", function() {
-           square.classList.add("hover");
-       });
        
        square.addEventListener("mouseenter", function() {
-           square.classList.remove("hover");
+           square.classList.add("hover");
        });
        
        square.addEventListener("mouseleave", function() {
@@ -39,7 +37,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     const [a, b, c] = combination;
                     if (state[a] && state[a] === state[b] && state[a] === state[c]) {
                         setTimeout(function() {
-                            alert(`Player ${state[a]} wins!`);
+                            status.textContent = `Congratulations! ${state[a]} wins!`;
+                            status.classList.add("you-won");
                         }, 100);
                         
                         break;
