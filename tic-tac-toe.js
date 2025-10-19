@@ -3,6 +3,10 @@ document.addEventListener("DOMContentLoaded", function() {
    const squares = document.querySelectorAll("#board div"); 
    let turn = "X";
    const state = Array(9).fill(null);
+   const winningCombinations = [
+       [0,1,2], [3,4,5], [6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]
+   ];
+
    squares.forEach(function(square, index) {
        square.classList.add("square");
        square.addEventListener("mouseover", function() {
@@ -22,6 +26,15 @@ document.addEventListener("DOMContentLoaded", function() {
                state[index] = turn;
                square.classList.add(turn);
                square.textContent = turn;
+                for (const combination of winningCombinations) {
+                    const [a, b, c] = combination;
+                    if (state[a] && state[a] === state[b] && state[a] === state[c]) {
+                        setTimeout(function() {
+                            alert(`Player ${state[a]} wins!`);
+                        }, 100);
+                        break;
+                    }
+                }
                turn = turn === "X" ? "O" : "X";
            }
        });
